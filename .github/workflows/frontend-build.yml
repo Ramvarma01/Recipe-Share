@@ -36,9 +36,9 @@ jobs:
           java-version: 17
 
       - name: Decode Keystore
-        working-directory: Frontend/android
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > RecipeShare.keystore
+          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > android/app/RecipeShare.keystore
+          test -s android/app/RecipeShare.keystore || (echo "ANDROID_KEYSTORE secret is missing or invalid" && exit 1)
 
       - name: Give Gradle Permission
         run: chmod +x android/gradlew
@@ -52,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: Frontend/android/app/build/outputs/apk/release/app-release.apk
