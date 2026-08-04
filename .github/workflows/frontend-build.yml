@@ -57,7 +57,7 @@ jobs:
       - name: Send APK Email
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
+          server_address: smtp.gmail.com
           server_port: 465
           secure: true
 
