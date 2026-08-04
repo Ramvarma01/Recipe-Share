@@ -35,6 +35,11 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Decode Keystore
+        working-directory: Frontend/android
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 --decode > RecipeShare.keystore
+
       - name: Give Gradle Permission
         run: chmod +x android/gradlew
 
