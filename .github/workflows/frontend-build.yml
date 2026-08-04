@@ -53,3 +53,20 @@ jobs:
         with:
           name: app-release
           path: Frontend/android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Send APK Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER_ADDRESS }}
+          server_port: 465
+          secure: true
+
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+
+          subject: RecipeShare APK
+          to: vikasjamkar2001@gmail.com
+          from: GitHub Actions
+          body: |
+            Please find the latest APK attached.
+          attachments: Frontend/android/app/build/outputs/apk/release/app-release.apk
