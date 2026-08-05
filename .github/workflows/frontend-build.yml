@@ -48,11 +48,20 @@ jobs:
           cd android
           ./gradlew assembleRelease
 
+      - name: Generate APK Name
+        run: |
+          echo "APK_DATE=$(date +'%d%B%Y')" >> $GITHUB_ENV
+
+      - name: Rename APK
+        run: |
+          mv android/app/build/outputs/apk/release/app-release.apk \
+             android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk
+        
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: Frontend/android/app/build/outputs/apk/release/app-release.apk
+          name: RecipeShare-${{ env.APK_DATE }}
+          path: Frontend/android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk
 
       - name: Send APK Email
         uses: dawidd6/action-send-mail@v3
@@ -69,4 +78,4 @@ jobs:
           from: GitHub Actions
           body: |
             Please find the latest APK attached.
-          attachments: Frontend/android/app/build/outputs/apk/release/app-release.apk
+          # attachments: Frontend/android/app/build/outputs/apk/release/app-release.apk
