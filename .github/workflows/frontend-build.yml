@@ -89,6 +89,9 @@ jobs:
         run: |
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 --decode > $RUNNER_TEMP/firebase.json
           test -s firebase.json || (echo "FIREBASE_SERVICE_ACCOUNT secret is missing or invalid" && exit 1)
+          echo "Decoded successfully"
+          ls -lh $RUNNER_TEMP/firebase.json
+          head -n 5 $RUNNER_TEMP/firebase.json
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
