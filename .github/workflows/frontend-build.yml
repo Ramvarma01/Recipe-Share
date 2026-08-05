@@ -74,8 +74,13 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
 
           subject: RecipeShare APK
-          to: vikasjamkar2001@gmail.com
+          to: vikasjamkar2001@gmail.com, ramchandra010304@gmail.com
           from: GitHub Actions
           body: |
-            Please find the latest APK attached.
+            A new RecipeShare APK has been generated.
+            The APK is named: RecipeShare-${{ env.APK_DATE }}.apk
+            
+            Download it from:
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          #  Please find the latest APK attached.
           # attachments: Frontend/android/app/build/outputs/apk/release/app-release.apk
