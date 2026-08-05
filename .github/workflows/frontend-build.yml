@@ -84,3 +84,21 @@ jobs:
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           #  Please find the latest APK attached.
           # attachments: Frontend/android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Decode Firebase Service Account
+        run: |
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 --decode > $RUNNER_TEMP/firebase.json
+          test -s firebase.json || (echo "FIREBASE_SERVICE_ACCOUNT secret is missing or invalid" && exit 1)
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Upload to Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute \
+          Frontend/android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk \
+          --app 1:118657273473:android:05cae712451171ccdfc780 \
+          --groups "QA Team" \
+          --release-notes "GitHub Actions Build"
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase.json
