@@ -98,6 +98,12 @@ jobs:
           pwd
           ls -lh android/app/build/outputs/apk/release/
 
+      - name: Get Commit Messages
+        run: |
+          echo "COMMITS<<EOF" >> $GITHUB_ENV
+          git log -5 --pretty=format:"• %s" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Create Firebase credentials
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_KEY }}' > $RUNNER_TEMP/firebase.json
@@ -115,7 +121,12 @@ jobs:
           android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk \
           --app 1:118657273473:android:05cae712451171ccdfc780 \
           --groups "qa-team" \
-          --release-notes "RecipeShare-${{ env.APK_DATE }}\nBuilt from GitHub Actions\nCommit: ${{ github.sha }}"
+          --release-notes "RecipeShare-${{ env.APK_DATE }}
+          Built from GitHub Actions
+          triggered by: ${{ github.actor }}
+          Commit: ${{ github.sha }}
+          changes: 
+          ${{ env.COMMITS }}"
         # --release-notes "GitHub Actions Build"
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase.json
