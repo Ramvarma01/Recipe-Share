@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Commit Messages
         run: |
-          echo "COMMIT=$(git log -5 --pretty="• %s")" >> $GITHUB_ENV
+          echo "COMMITS=$(git log -5 --pretty="• %s")" >> $GITHUB_ENV
 
       - name: Setup Node
         uses: actions/setup-node@v4
