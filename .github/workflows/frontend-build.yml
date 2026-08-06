@@ -21,6 +21,10 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@v4
 
+      - name: Get Commit Messages
+        run: |
+          echo "COMMIT=$(git log -5 --pretty="• %s")" >> $GITHUB_ENV
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -97,12 +101,6 @@ jobs:
         run: |
           pwd
           ls -lh android/app/build/outputs/apk/release/
-
-      - name: Get Commit Messages
-        run: |
-          echo "COMMITS<<EOF" >> $GITHUB_ENV
-          git log -5 --pretty=format:"• %s" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
 
       - name: Create Firebase credentials
         run: |
