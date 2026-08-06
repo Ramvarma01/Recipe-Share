@@ -114,7 +114,7 @@ jobs:
           firebase appdistribution:distribute \
           android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk \
           --app 1:118657273473:android:05cae712451171ccdfc780 \
-          --groups "QA Team" \
+          --groups "qa-team" \
           --release-notes "GitHub Actions Build"
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase.json
