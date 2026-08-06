@@ -82,7 +82,8 @@ android {
         applicationId "com.recipe_share"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        // versionCode 1
+        versionCode project.hasProperty("VERSION_CODE") ? VERSION_CODE.toInteger() : 1
         versionName "1.0"
     }
     signingConfigs {
