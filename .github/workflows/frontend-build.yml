@@ -93,6 +93,11 @@ jobs:
       #     ls -lh $RUNNER_TEMP/firebase.json
       #     head -n 5 $RUNNER_TEMP/firebase.json
 
+      - name: Verify APK Exists
+        run: |
+          pwd
+          ls -lh android/app/build/outputs/apk/release/
+
       - name: Create Firebase credentials
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_KEY }}' > $RUNNER_TEMP/firebase.json
@@ -107,7 +112,7 @@ jobs:
       - name: Upload to Firebase App Distribution
         run: |
           firebase appdistribution:distribute \
-          Frontend/android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk \
+          android/app/build/outputs/apk/release/RecipeShare-${{ env.APK_DATE }}.apk \
           --app 1:118657273473:android:05cae712451171ccdfc780 \
           --groups "QA Team" \
           --release-notes "GitHub Actions Build"
